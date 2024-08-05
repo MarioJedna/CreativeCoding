@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Cat Drawing with Animation</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Canvas Cat Drawing with Animation</h1>
+    <canvas id="catCanvas" width="600" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('catCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let tailAngle = 0;
+        let tongueY = 230;
+        let tongueDirection = 1;
+
+        function drawCat() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw cat body
+            ctx.beginPath();
+            ctx.ellipse(200, 350, 80, 100, Math.PI / 2, 0, Math.PI * 2);
+            ctx.fillStyle = 'gray';
+            ctx.fill();
+            ctx.closePath();
+
+            // Draw cat head
+            ctx.beginPath();
+            ctx.arc(200, 200, 100, 0, Math.PI * 2, true); // Outer circle
+            ctx.fillStyle = 'gray';
+            ctx.fill();
+            ctx.closePath();
+
+            // Draw left ear
+            ctx.beginPath();
+            ctx.moveTo(130, 120);
+            ctx.lineTo(160, 50);
+            ctx.lineTo(190, 120);
+            ctx.fillStyle = 'gray';
+            ctx.fill();
+            ctx.closePath();
+
+            // Draw right ear
+            ctx.beginPath();
+            ctx.moveTo(210, 120);
+            ctx.lineTo(240, 50);
+            ctx.lineTo(270, 120);
+            ctx.fillStyle = 'gray';
+            ctx.fill();
+            ctx.closePath();
+
+            // Draw eyes
+            ctx.beginPath();
+            ctx.arc(170, 180, 15, 0, Math.PI * 2, true); // Left eye
+            ctx.fillStyle = 'white';
+            ctx.fill();
+            ctx.closePath();
+
+            ctx.beginPath();
+            ctx.arc(230, 180, 15, 0, Math.PI * 2, true); // Right eye
+            ctx.fillStyle = 'white';
+            ctx.fill();
+            ctx.closePath();
+
+            ctx.beginPath();
+            ctx.arc(170, 180, 5, 0, Math.PI * 2, true); // Left pupil
+            ctx.fillStyle = 'black';
+            ctx.fill();
+            ctx.closePath();
+
+            ctx.beginPath();
+            ctx.arc(230, 180, 5, 0, Math.PI * 2, true); // Right pupil
+            ctx.fillStyle = 'black';
+            ctx.fill();
+            ctx.closePath();
+
+            // Draw nose
+            ctx.beginPath();
+            ctx.moveTo(200, 200);
+            ctx.lineTo(190, 220);
+            ctx.lineTo(210, 220);
+            ctx.fillStyle = 'pink';
+            ctx.fill();
+            ctx.closePath();
+
+            // Draw mouth
+            ctx.beginPath();
+            ctx.moveTo(190, 220);
+            ctx.lineTo(200, 230);
+            ctx.lineTo(210, 220);
+            ctx.stroke();
+            ctx.closePath();
+
+            // Draw tongue
+            ctx.beginPath();
+            ctx.moveTo(200, 230);
+            ctx.lineTo(190, tongueY);
+            ctx.lineTo(210, tongueY);
+            ctx.fillStyle = 'pink';
+            ctx.fill();
+            ctx.closePath();
+
+            // Draw whiskers
+            ctx.beginPath();
+            ctx.moveTo(160, 220);
+            ctx.lineTo(110, 210);
+            ctx.stroke();
+            ctx.moveTo(160, 225);
+            ctx.lineTo(110, 225);
+            ctx.stroke();
+            ctx.moveTo(160, 230);
+            ctx.lineTo(110, 240);
+            ctx.stroke();
+
+            ctx.moveTo(240, 220);
+            ctx.lineTo(290, 210);
+            ctx.stroke();
+            ctx.moveTo(240, 225);
+            ctx.lineTo(290, 225);
+            ctx.stroke();
+            ctx.moveTo(240, 230);
+            ctx.lineTo(290, 240);
+            ctx.stroke();
+            ctx.closePath();
+
+            // Draw tail
+            ctx.beginPath();
+            ctx.moveTo(280, 350);
+            ctx.quadraticCurveTo(280 + 50 * Math.cos(tailAngle), 350 - 50 * Math.sin(tailAngle), 350, 300);
+            ctx.strokeStyle = 'gray';
+            ctx.lineWidth = 10;
+            ctx.stroke();
+            ctx.closePath();
+        }
+
+        function animate() {
+            tailAngle += 0.15;
+            if (tailAngle > Math.PI * 2) {
+                tailAngle = 0;
+            }
+
+            tongueY += tongueDirection;
+            if (tongueY > 240 || tongueY < 230) {
+                tongueDirection *= -1;
+            }
+
+            drawCat();
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
